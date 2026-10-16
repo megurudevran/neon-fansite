@@ -33,7 +33,7 @@ Bu komut çalıştırılmazsa site yine açılır; Neon görselinin yerinde yıl
 
 - Kendi GIF/WebP animasyonlarınızı `static/gifs/` klasörüne atın; galeriye otomatik eklenir.
 - `static/images/` içine eklediğiniz her görsel (adı `ability-`, `fallback`, `neon-icon`, `neon-background` ile başlamayan) galeride görünür.
-- `static/videos/` ve `static/gifs/` içeriği GitHub'a gönderilmez. Yalnızca paylaşma hakkına sahip olduğunuz medya dosyalarını ekleyin.
+- `static/videos/` ve `static/gifs/` içindeki medya dosyaları bu depoda paylaşılır; yalnızca size ait veya paylaşma izniniz olan dosyaları ekleyin.
 - Yetenek ikonları `ability-c.png`, `ability-q.png`, `ability-e.png`, `ability-x.png` adlarıyla aranır.
   İndirme sırasında komut hangi yeteneğin hangi tuşa eşlendiğini yazdırır; yanlışsa dosya adlarını değiştirin.
 

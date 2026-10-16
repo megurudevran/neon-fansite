@@ -4,5 +4,3 @@ __pycache__/
 .env
 staticfiles/
 db.sqlite3
-static/videos/
-static/gifs/
