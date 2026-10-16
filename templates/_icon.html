@@ -1,0 +1,8 @@
+<svg class="ico" viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true">
+{% if name == "battery" %}<rect x="4" y="14" width="34" height="20"/><path d="M42 21v6"/><path d="M10 20v8M17 20v8M24 20v8"/>
+{% elif name == "wall" %}<path d="M6 40V12M18 40V8M30 40V16M42 40V10"/><path d="M4 40h40"/>
+{% elif name == "bolt" %}<path d="M28 4 10 26h12l-4 18 20-24H26z"/>
+{% elif name == "run" %}<path d="M4 14h14M2 24h22M8 34h14"/><path d="m28 10 14 14-14 14"/>
+{% else %}<path d="M4 24h26"/><path d="M30 12 44 24 30 36"/><path d="M8 14h10M8 34h10" opacity=".6"/>
+{% endif %}
+</svg>

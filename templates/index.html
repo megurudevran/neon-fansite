@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Sayfanın başı">
+    <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M19 2 6 18h8l-3 12 15-18h-8z"/></svg>
+    <span>NEON</span>
+  </a>
+  <nav aria-label="Ana menü">
+    <a href="#bilgi">Karakter</a>
+    <a href="#yetenekler">Yetenekler</a>
+    <a href="#hikaye">Hikâye</a>
+    <a href="#galeri">Galeri</a>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- 1. HERO -->
+  <section class="hero" id="hero">
+    {% if hero_bg %}<img class="hero-bg" src="{% static hero_bg %}" alt="" data-parallax="0.12">{% endif %}
+    <div class="hero-grid" aria-hidden="true"></div>
+    <canvas id="sparks" aria-hidden="true"></canvas>
+    <div class="hero-copy">
+      <p class="hero-role">VALORANT · Düellocu · Filipinler</p>
+      <h1 class="neon-word" aria-label="Neon"><span>N</span><span>E</span><span>O</span><span>N</span></h1>
+      <p class="hero-tag">{{ c.TAGLINE }}</p>
+      <a class="btn" href="#bilgi" id="discover">Karakteri Keşfet</a>
+    </div>
+    <div class="hero-figure" data-parallax="-0.08">
+      <img id="hero-img"
+           src="{% if hero_image %}{% static hero_image %}{% else %}{% static 'images/fallback-neon.svg' %}{% endif %}"
+           data-fallback="{% static 'images/fallback-neon.svg' %}"
+           alt="Neon karakter çizimi" width="900" height="1200" fetchpriority="high">
+    </div>
+    {% if assets_missing %}
+    <p class="notice" role="note">Neon görselleri henüz indirilmedi. Terminalde <code>python manage.py fetch_neon_assets</code> komutunu çalıştırın.</p>
+    {% endif %}
+  </section>
+
+  <!-- 2. KARAKTER BİLGİLERİ -->
+  <section class="section" id="bilgi">
+    <div class="wrap">
+      <h2 class="title reveal">Karakter bilgileri</h2>
+      <div class="cards profile">
+        {% if c.REAL_NAME %}
+        <article class="card reveal"><span class="k">Gerçek ad</span><strong class="v">{{ c.REAL_NAME }}</strong></article>
+        {% endif %}
+        {% for p in c.PROFILE %}
+        <article class="card reveal"><span class="k">{{ p.label }}</span><strong class="v">{{ p.value }}</strong></article>
+        {% endfor %}
+      </div>
+      <p class="lead reveal">{{ c.TAGLINE }} Hızlı girişler, elektrikten duvarlar ve sersemleten yıldırımlar onun oyununun omurgası.</p>
+    </div>
+  </section>
+
+  <!-- 3. YETENEKLER -->
+  <section class="section alt" id="yetenekler">
+    <div class="wrap stage reveal">
+      <div class="stage-left">
+        <h2 class="title">Özel yetenekleri</h2>
+        <div class="icon-strip" role="tablist" aria-label="Yetenekler">
+          {% for a in abilities %}
+          <button type="button" class="icon-btn{% if forloop.first %} active{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  data-name="{{ a.name }}" data-short="{{ a.short }}" data-video="{% if a.video %}{% static a.video %}{% endif %}"
+                  aria-label="{{ a.name }}" title="{{ a.name }}">
+            <span class="icon-face">
+              {% if a.image %}<img src="{% static a.image %}" alt="" width="72" height="72" loading="lazy" data-hide-on-error>{% endif %}
+              {% include "_icon.html" with name=a.icon %}
+            </span>
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="stage-right" aria-live="polite">
+        <div class="player">
+          <video id="stage-video" muted loop playsinline preload="none"></video>
+          <p id="stage-missing" hidden>Bu yetenek için video bulunamadı. <code>static/videos/</code> klasörüne ekleyin.</p>
+        </div>
+        <h3 id="stage-name"></h3>
+        <p id="stage-short"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. HİKÂYE -->
+  <section class="section" id="hikaye">
+    <div class="wrap narrow">
+      <h2 class="title reveal">Hikâye ve geçmiş</h2>
+      <p class="lead reveal">{{ c.STORY_INTRO }}</p>
+      <ol class="timeline" id="timeline">
+        {% for t in c.TIMELINE %}
+        <li class="reveal">
+          <h3>{{ t.title }}</h3>
+          <p>{{ t.text }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+      <a class="text-link" href="{{ c.OFFICIAL_URL }}" target="_blank" rel="noopener noreferrer">Resmî ajan sayfasında devamını oku</a>
+    </div>
+  </section>
+
+  <!-- 5. GALERİ -->
+  <section class="section alt" id="galeri">
+    <div class="wrap">
+      <h2 class="title reveal">Görsel galeri</h2>
+      {% if gallery %}
+      <div class="gallery">
+        {% for g in gallery %}
+        <button class="shot reveal" type="button" data-full="{% static g.path %}" data-title="{{ g.title }}" aria-label="{{ g.title }} görselini büyüt">
+          <img src="{% static g.path %}" alt="{{ g.title }}" loading="lazy" data-hide-on-error>
+          <span>{{ g.title }}{% if g.animated %} · animasyonlu{% endif %}</span>
+        </button>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty reveal">
+        <img src="{% static 'images/fallback-neon.svg' %}" alt="" width="120" height="160">
+        <p>Galeri boş. Görselleri indirmek için <code>python manage.py fetch_neon_assets</code> komutunu çalıştırın. Kendi GIF veya WebP dosyalarınızı <code>static/gifs/</code> klasörüne atarsanız galeriye otomatik eklenir.</p>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+</main>
+
+<!-- 7. ALT BÖLÜM -->
+<footer class="footer">
+  <div class="wrap">
+    <p class="closing">{{ c.CLOSING }}</p>
+    <a class="btn ghost" href="{{ c.OFFICIAL_URL }}" target="_blank" rel="noopener noreferrer">Resmî Neon sayfası</a>
+    <a class="text-link" href="{{ c.VALORANT_URL }}" target="_blank" rel="noopener noreferrer">playvalorant.com</a>
+    <hr>
+    <p class="fine">© {{ c.FOOTER.year }} {{ c.FOOTER.owner }} · <a href="{{ c.FOOTER.contact_url }}">{{ c.FOOTER.contact_label }}</a></p>
+    <p class="fine">{{ c.FOOTER.disclaimer }}</p>
+  </div>
+</footer>
+
+<dialog id="lightbox" aria-label="Büyük görsel">
+  <button type="button" class="close" id="lb-close" aria-label="Kapat">&times;</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</dialog>
+{% endblock %}
