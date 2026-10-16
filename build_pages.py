@@ -9,6 +9,7 @@ def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
     os.environ.setdefault("DJANGO_DEBUG", "1")
     os.environ.setdefault("DJANGO_SECRET_KEY", "github-pages-build-only")
+    os.environ.setdefault("DJANGO_STATIC_URL", "/neon-fansite/static/")
 
     import django
 
