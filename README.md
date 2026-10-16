@@ -70,13 +70,13 @@ static/images/     Görseller
 static/gifs/       GIF / animasyonlu WebP
 ```
 
-## Render ile yayınlama
+## GitHub Pages ile yayınlama
 
-1. Render hesabında GitHub hesabını bağla.
-2. Yeni bir Blueprint oluşturup `megurudevran/neon-fansite` deposunu seç.
-3. `render.yaml` ayarlarını onayla. Render, gizli anahtarı üretip uygulamayı yayınlar.
+1. GitHub deposunda **Settings → Pages** sayfasını aç.
+2. **Build and deployment → Source** alanında **GitHub Actions** seç.
+3. `master` dalına gönderilen her commit siteyi yeniden yayınlar.
 
-Ücretsiz servis boşta kaldığında uykuya geçebilir; ilk açılışın gecikmesi normaldir.
+Site adresi: https://megurudevran.github.io/neon-fansite/
 
 ## Üretim ortamı
 
