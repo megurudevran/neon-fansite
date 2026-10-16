@@ -70,6 +70,14 @@ static/images/     Görseller
 static/gifs/       GIF / animasyonlu WebP
 ```
 
+## Render ile yayınlama
+
+1. Render hesabında GitHub hesabını bağla.
+2. Yeni bir Blueprint oluşturup `megurudevran/neon-fansite` deposunu seç.
+3. `render.yaml` ayarlarını onayla. Render, gizli anahtarı üretip uygulamayı yayınlar.
+
+Ücretsiz servis boşta kaldığında uykuya geçebilir; ilk açılışın gecikmesi normaldir.
+
 ## Üretim ortamı
 
 ```powershell
